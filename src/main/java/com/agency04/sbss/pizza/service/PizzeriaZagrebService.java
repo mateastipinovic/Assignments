@@ -1,8 +1,14 @@
-package com.agency04.sbss.pizza;
+package com.agency04.sbss.pizza.service;
 
-public class PizzeriaZagreb implements PizzeriaService{
+import com.agency04.sbss.pizza.model.Pizza;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
+public class PizzeriaZagrebService implements PizzeriaService {
+    @Value("${foo.name}")
     private String name;
+    @Value("${foo.address}")
     private String address;
 
     public void setName(String name) {

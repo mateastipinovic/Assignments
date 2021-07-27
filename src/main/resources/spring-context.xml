@@ -7,27 +7,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:component-scan base-package="com.agency04.sbss.pizza"/>
     <context:property-placeholder location="classpath:application.properties"/>
-    <!-- Define your Beans here -->
-    <bean id="myPizzeriaSplit"
-          class="com.agency04.sbss.pizza.PizzeriaSplit">
-        <property name="name" value="Pizzeria Split"/>
-        <property name="address" value="Vukovarska ulica 15"/>
-    </bean>
 
-    <bean id="myDeliverySplit"
-          class="com.agency04.sbss.pizza.PizzaDeliveryService">
-        <constructor-arg ref="myPizzeriaSplit"/>
-    </bean>
-
-    <bean id="myPizzeriaZagreb"
-          class="com.agency04.sbss.pizza.PizzeriaZagreb">
-        <property name="name" value="${foo.name}"/>
-        <property name="address" value="${foo.address}"/>
-    </bean>
-
-    <bean id="myDeliveryZagreb"
-        class="com.agency04.sbss.pizza.PizzaDeliveryService">
-        <property name="pizzeriaService" ref="myPizzeriaZagreb"/>
-    </bean>
 </beans>

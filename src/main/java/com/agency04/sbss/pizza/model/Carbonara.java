@@ -1,6 +1,6 @@
-package com.agency04.sbss.pizza;
+package com.agency04.sbss.pizza.model;
 
-public class Carbonara implements Pizza{
+public class Carbonara implements Pizza {
     @Override
     public String getName() {
         return "Carbonara";
