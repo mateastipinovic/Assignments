@@ -10,7 +10,6 @@ public class FruttiDiMare implements Pizza {
     }
     @Override
     public List<PizzaIngredient> getIngredients() {
-        List ingredients = Arrays.asList(PizzaIngredient.TOMATO_SAUCE, PizzaIngredient.SEAFOOD);
-        return ingredients;
+        return Arrays.asList(PizzaIngredient.TOMATO_SAUCE, PizzaIngredient.SEAFOOD);
     }
 }

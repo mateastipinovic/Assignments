@@ -10,7 +10,6 @@ public class Margherita implements Pizza {
     }
     @Override
     public List<PizzaIngredient> getIngredients() {
-        List ingredients = Arrays.asList(PizzaIngredient.TOMATO_SAUCE, PizzaIngredient.MOZZARELLA, PizzaIngredient.OREGANO);
-        return ingredients;
+        return Arrays.asList(PizzaIngredient.TOMATO_SAUCE, PizzaIngredient.MOZZARELLA, PizzaIngredient.OREGANO);
     }
 }

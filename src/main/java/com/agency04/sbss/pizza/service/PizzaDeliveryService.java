@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class PizzaDeliveryService {
@@ -19,11 +21,11 @@ public class PizzaDeliveryService {
     }
 
     public String orderPizza (Pizza pizza){
-        String ingredients = "";
-        for (PizzaIngredient ingr : pizza.getIngredients())
-        {
-            ingredients=ingredients.concat(ingr.toString()).concat(" ").toLowerCase(Locale.ROOT);
-        }
-        return  "You ordered a " + pizza.getName() + " / " + ingredients + "/ from " + pizzeriaService.getName() + ", " + pizzeriaService.getAddress() + ".";
+
+        String ingredients = pizza.getIngredients().stream()
+                .map(n -> String.valueOf(n).toLowerCase(Locale.ROOT))
+                .collect(Collectors.joining(", ", " (", ") "));
+
+        return  "You ordered a " + pizza.getName() + ingredients + "from " + pizzeriaService.getName() + ", " + pizzeriaService.getAddress() + ".";
     }
 }

@@ -10,7 +10,6 @@ public class Marinara implements Pizza {
     }
     @Override
     public List<PizzaIngredient> getIngredients() {
-        List ingredients = Arrays.asList(PizzaIngredient.TOMATO_SAUCE, PizzaIngredient.GARLIC, PizzaIngredient.BASIL);
-        return ingredients;
+        return Arrays.asList(PizzaIngredient.TOMATO_SAUCE, PizzaIngredient.GARLIC, PizzaIngredient.BASIL);
     }
 }
