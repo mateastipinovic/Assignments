@@ -1,6 +1,8 @@
 package com.agency04.sbss.pizza.model;
 
+import java.util.List;
+
 public interface Pizza {
-        public String getName();
-        public String getIngredients();
+        String getName();
+        List<PizzaIngredient> getIngredients();
     }
