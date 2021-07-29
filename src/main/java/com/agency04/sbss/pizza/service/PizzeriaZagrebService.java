@@ -2,15 +2,29 @@ package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.model.Pizza;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 @Component
+@Scope("prototype")
 public class PizzeriaZagrebService implements PizzeriaService {
     @Value("${foo.name}")
     private String name;
     @Value("${foo.address}")
     private String address;
 
+    @PostConstruct
+    public void dataInitialization(){
+        this.name="Pizzeria Zagreb";
+        this.address="Splitska ulica 12";
+    }
+    @PreDestroy
+    public void preDestroyMessage(){
+        System.out.println(">> Pizzeria Zagreb : inside of preDestroyMessage()");
+    }
     public void setName(String name) {
         this.name = name;
     }

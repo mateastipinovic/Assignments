@@ -5,13 +5,25 @@ import com.agency04.sbss.pizza.service.PizzeriaService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 @Component
 public class PizzeriaSplitService implements PizzeriaService {
-    @Value("Pizzeria Split")
+  @Value("Pizzeria Split")
     private String name;
-    @Value("Vukovarska ulica 15")
+  @Value("Vukovarska ulica 15")
     private String address;
 
+    @PostConstruct
+    public void dataInitialization(){
+        this.name="Pizzeria Split";
+        this.address="Vukovarska ulica 15";
+    }
+    @PreDestroy
+    public void preDestroyMessage(){
+        System.out.println(">> Pizzeria Split : inside of preDestroyMessage()");
+    }
     public void setName(String name) {
         this.name = name;
     }
