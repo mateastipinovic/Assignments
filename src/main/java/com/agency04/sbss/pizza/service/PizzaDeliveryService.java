@@ -4,6 +4,7 @@ import com.agency04.sbss.pizza.model.Pizza;
 import com.agency04.sbss.pizza.model.PizzaIngredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
@@ -13,7 +14,6 @@ import java.util.stream.Stream;
 @Component
 public class PizzaDeliveryService {
     @Autowired
-    @Qualifier("pizzeriaZagrebService")
     private PizzeriaService pizzeriaService;
 
     public PizzaDeliveryService(){

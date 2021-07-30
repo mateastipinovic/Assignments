@@ -3,16 +3,19 @@ package com.agency04.sbss.pizza.service;
 import com.agency04.sbss.pizza.model.Pizza;
 import com.agency04.sbss.pizza.service.PizzeriaService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Component
+@Service
 public class PizzeriaSplitService implements PizzeriaService {
-  @Value("Pizzeria Split")
+ // @Value("Pizzeria Split")
     private String name;
-  @Value("Vukovarska ulica 15")
+ // @Value("Vukovarska ulica 15")
     private String address;
 
     @PostConstruct
