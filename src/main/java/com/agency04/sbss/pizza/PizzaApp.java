@@ -14,10 +14,10 @@ public class PizzaApp {
 
         Pizza theMargherita = context.getBean("margherita", Pizza.class);
         Pizza theFruttiDiMare = context.getBean("fruttiDiMare", Pizza.class);
-        PizzaDeliveryService theDeliverySplit = context.getBean("pizzaDeliveryService", PizzaDeliveryService.class);
+        PizzaDeliveryService theDeliveryZagreb = context.getBean("pizzaDeliveryService", PizzaDeliveryService.class);
 
-        System.out.println(theDeliverySplit.orderPizza(theMargherita));
-        System.out.println(theDeliverySplit.orderPizza(theFruttiDiMare));
+        System.out.println(theDeliveryZagreb.orderPizza(theMargherita));
+        System.out.println(theDeliveryZagreb.orderPizza(theFruttiDiMare));
 
         context.close();
 

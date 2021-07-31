@@ -17,11 +17,12 @@ public class PizzeriaZagrebService implements PizzeriaService {
     @Value("${foo.address}")
     private String address;
 
-    @PostConstruct
+   @PostConstruct
     public void dataInitialization(){
         this.name="Pizzeria Zagreb";
         this.address="Splitska ulica 12";
     }
+
     @PreDestroy
     public void preDestroyMessage(){
         System.out.println(">> Pizzeria Zagreb : inside of preDestroyMessage()");

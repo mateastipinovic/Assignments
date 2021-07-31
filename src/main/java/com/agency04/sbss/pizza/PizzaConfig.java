@@ -1,23 +1,18 @@
 package com.agency04.sbss.pizza;
 
-import com.agency04.sbss.pizza.model.Margherita;
-import com.agency04.sbss.pizza.model.Pizza;
-import com.agency04.sbss.pizza.service.PizzaDeliveryService;
 import com.agency04.sbss.pizza.service.PizzeriaService;
-import com.agency04.sbss.pizza.service.PizzeriaSplitService;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import com.agency04.sbss.pizza.service.PizzeriaZagrebService;
+import org.springframework.context.annotation.*;
 
 @Configuration
 @ComponentScan("com.agency04.sbss.pizza")
+@PropertySource("classpath:application.properties")
 public class PizzaConfig {
 
     @Bean
     @Primary
-    public PizzeriaService pizzeriaSplitService(){
-        return new PizzeriaSplitService();
+    public PizzeriaService pizzeriaZagrebService(){
+        return new PizzeriaZagrebService();
     }
 
 }
