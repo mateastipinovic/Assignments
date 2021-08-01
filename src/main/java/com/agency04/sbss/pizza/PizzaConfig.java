@@ -9,9 +9,9 @@ import org.springframework.context.annotation.*;
 @PropertySource("classpath:application.properties")
 public class PizzaConfig {
 
-    @Bean
-    @Primary
-    public PizzeriaService pizzeriaZagrebService(){
+   @Bean
+   @Primary
+    public PizzeriaService pizzeriaZagreb(){
         return new PizzeriaZagrebService();
     }
 
