@@ -12,9 +12,7 @@ import javax.annotation.PreDestroy;
 
 @Service
 public class PizzeriaSplitService implements PizzeriaService {
- // @Value("Pizzeria Split")
     private String name;
- // @Value("Vukovarska ulica 15")
     private String address;
 
     @PostConstruct
