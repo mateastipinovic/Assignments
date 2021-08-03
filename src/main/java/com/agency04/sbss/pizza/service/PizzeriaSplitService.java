@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-@Component
 @Service
 public class PizzeriaSplitService implements PizzeriaService {
  // @Value("Pizzeria Split")
