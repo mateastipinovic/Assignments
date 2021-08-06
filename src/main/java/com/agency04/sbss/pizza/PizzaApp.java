@@ -1,22 +1,26 @@
 package com.agency04.sbss.pizza;
 
-import com.agency04.sbss.pizza.model.Pizza;
+import com.agency04.sbss.pizza.model.FruttiDiMare;
+import com.agency04.sbss.pizza.model.Margherita;
 import com.agency04.sbss.pizza.service.PizzaDeliveryService;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.agency04.sbss.pizza.service.PizzeriaService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
+@SpringBootApplication
 public class PizzaApp {
 
     public static void main(String[] args) {
         // Add some pizza code
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+        ApplicationContext context = SpringApplication.run(PizzaApp.class, args);
 
-        Pizza theMargherita = context.getBean("margherita", Pizza.class);
-        Pizza theFruttiDiMare = context.getBean("fruttiDiMare", Pizza.class);
-        PizzaDeliveryService theDeliveryZagreb = context.getBean("pizzaDeliveryService", PizzaDeliveryService.class);
-        System.out.println(theDeliveryZagreb.orderPizza(theMargherita));
-        System.out.println(theDeliveryZagreb.orderPizza(theFruttiDiMare));
+        PizzaDeliveryService theDeliveryZagreb = context.getBean("deliveryService", PizzaDeliveryService.class);
+        System.out.println(theDeliveryZagreb.orderPizza(new Margherita()));
+        System.out.println(theDeliveryZagreb.orderPizza(new FruttiDiMare()));
 
-        context.close();
+        PizzeriaService thePizzeriaSplit = context.getBean("pizzeriaSplitService", PizzeriaService.class);
+        System.out.println("Initialization check: " + thePizzeriaSplit.getName() + ", " + thePizzeriaSplit.getAddress());
 
     }
 
