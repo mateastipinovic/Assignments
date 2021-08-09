@@ -1,9 +1,12 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.model.Pizza;
+import com.agency04.sbss.pizza.model.PizzaMenuItem;
+
+import java.util.List;
 
 public interface PizzeriaService {
     String getName();
     String getAddress();
-    void makePizza(Pizza pizza);
+    List<PizzaMenuItem> getMenu();
+    void makePizza(String pizza, String size, int quantity);
 }
