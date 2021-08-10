@@ -1,10 +1,12 @@
 package com.agency04.sbss.pizza.model;
 
+import java.util.List;
+
 public class PizzaMenuItem {
     private String pizza;
-    private String size;
+    private List<PizzaSize> size;
 
-    public PizzaMenuItem(String pizza, String size){
+    public PizzaMenuItem(String pizza, List<PizzaSize> size){
         this.pizza = pizza;
         this.size = size;
     }
@@ -17,11 +19,11 @@ public class PizzaMenuItem {
         this.pizza = pizza;
     }
 
-    public String getSize() {
+    public List<PizzaSize> getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(List<PizzaSize> size) {
         this.size = size;
     }
 }

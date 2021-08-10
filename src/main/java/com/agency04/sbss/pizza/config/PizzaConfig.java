@@ -2,15 +2,15 @@ package com.agency04.sbss.pizza.config;
 
 import com.agency04.sbss.pizza.service.PizzeriaService;
 import com.agency04.sbss.pizza.service.PizzeriaZagrebService;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@ComponentScan("com.agency04.sbss.pizza")
 @PropertySource("classpath:application.properties")
 public class PizzaConfig {
 
    @Bean
-   @Primary
     public PizzeriaService pizzeriaZagreb(){
         return new PizzeriaZagrebService();
     }

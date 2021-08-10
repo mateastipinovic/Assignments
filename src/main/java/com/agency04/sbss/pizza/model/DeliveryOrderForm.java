@@ -3,7 +3,7 @@ package com.agency04.sbss.pizza.model;
 public class DeliveryOrderForm {
     private Customer customer;
     private String pizza;
-    private String pizzaSize;
+    private PizzaSize pizzaSize;
     private int quantity;
 
     public  DeliveryOrderForm(){
@@ -25,7 +25,7 @@ public class DeliveryOrderForm {
         return pizza;
     }
 
-    public String getPizzaSize() {
+    public PizzaSize getPizzaSize() {
         return pizzaSize;
     }
 
