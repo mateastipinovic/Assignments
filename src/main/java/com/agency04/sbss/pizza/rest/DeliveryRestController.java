@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/delivery")
 public class DeliveryRestController {
 
     @Autowired
@@ -25,14 +25,14 @@ public class DeliveryRestController {
         currentOrders = new ArrayList<>();
     }
 
-    @PostMapping("/delivery/order")
+    @PostMapping("/order")
     public ResponseEntity orderDetails (@RequestBody DeliveryOrderForm deliveryOrderForm){
         currentOrders.add(new DeliveryOrderForm(deliveryOrderForm));
         deliveryService.orderPizza(deliveryOrderForm);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @GetMapping("delivery/list")
+    @GetMapping("/list")
     public List<DeliveryOrderForm> currentOrders(){
         return currentOrders;
     }

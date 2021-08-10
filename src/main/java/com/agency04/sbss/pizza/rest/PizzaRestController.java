@@ -12,7 +12,7 @@ import java.util.List;
 
 
     @RestController
-    @RequestMapping("/api")
+    @RequestMapping("/api/pizzeria")
     public class PizzaRestController {
 
         @Autowired
@@ -20,12 +20,12 @@ import java.util.List;
         @Autowired
         private PizzaDeliveryService deliveryService;
 
-        @GetMapping("/pizzeria/menu")
+        @GetMapping("/menu")
         public List<PizzaMenuItem> getPizzeriaMenu() {
             return pizzeriaSplitService.getMenu();
         }
 
-        @GetMapping("/pizzeria")
+        @GetMapping("/")
         public PizzeriaService getPizzeriaDetails() {
             return deliveryService.getCurrentPizzeria();
         }

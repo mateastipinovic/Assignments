@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/customer")
 public class CustomerRestController {
 
     private List<Customer> customers;
@@ -23,24 +23,32 @@ public class CustomerRestController {
         customers.add(new Customer(2, "Stipe Stipić", "Stipićeva 1"));
     }
 
-    @GetMapping("/customer/{username}")
+    @GetMapping("/{username}")
     public Customer getCustomer(@PathVariable String username) {
-        return customers.stream().filter(x -> x.getUserName().equals(username)).findFirst().orElse(null);
+        Customer customer = customers.stream().filter(x -> x.getUserName().equals(username)).findFirst().orElse(null);
+        if(customer == null){
+            throw new CustomerNotFoundException("Customer with username " + username + " doesn't exist.");
+        }
+        return customer;
     }
 
-    @DeleteMapping("/customer/{username}")
+    @DeleteMapping("/{username}")
     public ResponseEntity deleteCustomer(@PathVariable String username) {
-        customers.remove(customers.stream().filter(x -> x.getUserName().equals(username)).findFirst().orElse(null));
+        Customer customer = customers.stream().filter(x -> x.getUserName().equals(username)).findFirst().orElse(null);
+        if(customer == null){
+            throw new CustomerNotFoundException("Customer with username " + username + " doesn't exist.");
+        }
+        customers.remove(customer);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/customer")
+    @PostMapping("/")
     public ResponseEntity registerCustomer(@RequestBody Customer customer) {
         customers.add(new Customer(customer));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PutMapping("/customer")
+    @PutMapping("/")
     public ResponseEntity updateCustomer(@RequestBody Customer customer) {
         Customer temp = customers.stream().filter(x -> x.getCustomerId() == customer.getCustomerId()).findFirst().orElse(null);
         if (temp != null) {
