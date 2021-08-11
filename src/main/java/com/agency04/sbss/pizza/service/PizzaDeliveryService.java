@@ -4,5 +4,5 @@ import com.agency04.sbss.pizza.model.DeliveryOrderForm;
 
 public interface PizzaDeliveryService {
         public PizzeriaService getCurrentPizzeria();
-        public String orderPizza (DeliveryOrderForm deliveryOrderForm);
+        public DeliveryOrderForm orderPizza (DeliveryOrderForm deliveryOrderForm);
 }

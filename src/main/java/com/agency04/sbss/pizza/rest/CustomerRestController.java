@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -45,7 +46,10 @@ public class CustomerRestController {
     @PostMapping("/")
     public ResponseEntity registerCustomer(@RequestBody Customer customer) {
         customers.add(new Customer(customer));
-        return ResponseEntity.ok(HttpStatus.OK);
+        if(customers.stream().filter(x -> x.getCustomerId() == customer.getCustomerId()).findFirst().orElse(null) == null ){
+            throw new CustomerNotFoundException("Customer is not registered.");
+        }
+        return  ResponseEntity.ok(HttpStatus.CREATED).status(201).build();
     }
 
     @PutMapping("/")
@@ -54,7 +58,9 @@ public class CustomerRestController {
         if (temp != null) {
             int index = customers.indexOf(temp);
             customers.set(index, customer);
-            return ResponseEntity.ok(HttpStatus.OK);
+            if(Objects.equals(customers.get(index), customer)){
+                return  ResponseEntity.ok(HttpStatus.OK);
+            }
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
     }

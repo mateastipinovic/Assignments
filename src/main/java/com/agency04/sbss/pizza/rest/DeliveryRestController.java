@@ -28,8 +28,12 @@ public class DeliveryRestController {
     @PostMapping("/order")
     public ResponseEntity orderDetails (@RequestBody DeliveryOrderForm deliveryOrderForm){
         currentOrders.add(new DeliveryOrderForm(deliveryOrderForm));
-        deliveryService.orderPizza(deliveryOrderForm);
-        return ResponseEntity.ok(HttpStatus.OK);
+        DeliveryOrderForm check = deliveryService.orderPizza(deliveryOrderForm);
+        if(check == deliveryOrderForm){
+            return ResponseEntity.ok(HttpStatus.CREATED).status(201).build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
+
     }
 
     @GetMapping("/list")

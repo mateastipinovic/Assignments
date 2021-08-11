@@ -19,13 +19,8 @@ public class DeliveryService implements PizzaDeliveryService {
 
 
     @Override
-    public String orderPizza (DeliveryOrderForm deliveryOrderForm){
+    public DeliveryOrderForm orderPizza (DeliveryOrderForm deliveryOrderForm){
         pizzeriaService.makePizza(deliveryOrderForm.getPizza(), deliveryOrderForm.getPizzaSize(), deliveryOrderForm.getQuantity());
-        return  String.format("Order details: %s, %s ordered %d of %s pizza in %s size",
-                deliveryOrderForm.getCustomer().getUserName(),
-                deliveryOrderForm.getCustomer().getAddress(),
-                deliveryOrderForm.getQuantity(),
-                deliveryOrderForm.getPizza(),
-                deliveryOrderForm.getPizzaSize());
+        return  deliveryOrderForm;
     }
 }
