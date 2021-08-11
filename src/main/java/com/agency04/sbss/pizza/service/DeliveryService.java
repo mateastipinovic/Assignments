@@ -1,11 +1,8 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.model.Pizza;
+import com.agency04.sbss.pizza.model.DeliveryOrderForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 @Service
 public class DeliveryService implements PizzaDeliveryService {
@@ -16,12 +13,14 @@ public class DeliveryService implements PizzaDeliveryService {
 
     }
 
-    public String orderPizza (Pizza pizza){
+    public PizzeriaService getCurrentPizzeria(){
+        return pizzeriaService;
+    }
 
-        String ingredients = pizza.getIngredients().stream()
-                .map(n -> String.valueOf(n).toLowerCase(Locale.ROOT))
-                .collect(Collectors.joining(", ", " (", ") "));
 
-        return  "You ordered a " + pizza.getName() + ingredients + "from " + pizzeriaService.getName() + ", " + pizzeriaService.getAddress() + ".";
+    @Override
+    public DeliveryOrderForm orderPizza (DeliveryOrderForm deliveryOrderForm){
+        pizzeriaService.makePizza(deliveryOrderForm.getPizza(), deliveryOrderForm.getPizzaSize(), deliveryOrderForm.getQuantity());
+        return  deliveryOrderForm;
     }
 }
