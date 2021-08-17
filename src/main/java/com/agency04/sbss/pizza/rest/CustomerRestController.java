@@ -1,29 +1,28 @@
 package com.agency04.sbss.pizza.rest;
 
-import com.agency04.sbss.pizza.DAO.CustomerRepository;
 import com.agency04.sbss.pizza.model.Customer;
+import com.agency04.sbss.pizza.model.CustomerForm;
+import com.agency04.sbss.pizza.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerRestController {
 
-    private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     @Autowired
-    public CustomerRestController(CustomerRepository theCustomerService){
-        customerRepository= theCustomerService;
+    public CustomerRestController(CustomerService customerService){
+        this.customerService = customerService;
     }
 
     @GetMapping("/{username}")
     public Customer getCustomer(@PathVariable String username) {
-        Customer customer = customerRepository.findByUsername(username);
+        Customer customer = customerService.findByUsername(username);
         if(customer == null){
             throw new CustomerNotFoundException("Customer with username " + username + " doesn't exist.");
         }
@@ -32,35 +31,29 @@ public class CustomerRestController {
 
     @DeleteMapping("/{username}")
     public ResponseEntity deleteCustomer(@PathVariable String username) {
-        Customer tempCustomer = customerRepository.findByUsername(username);
+        Customer tempCustomer = customerService.findByUsername(username);
 
         if (tempCustomer == null) {
             throw new CustomerNotFoundException("Customer with username " + username + " doesn't exist.");
         }
 
-        customerRepository.deleteByUsername(username);
+        customerService.deleteByUsername(username);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity registerCustomer(@RequestBody Customer customer) {
-        customer.setId(0);
-        customerRepository.save(customer);
-        if(customerRepository.findByUsername(customer.getUsername()) == null ){
-            throw new CustomerNotFoundException("Customer is not registered.");
-        }
-        return  ResponseEntity.ok(HttpStatus.CREATED).status(201).build();
+    public CustomerForm registerCustomer(@RequestBody CustomerForm customer) {
+        customerService.save(customer);
+        return  customer;
     }
 
     @PutMapping("/")
-    public ResponseEntity updateCustomer(@RequestBody Customer customer) {
-        Optional<Customer> tempCustomer = customerRepository.findById(customer.getId());;
-        if (tempCustomer.isPresent()) {
-            customerRepository.save(tempCustomer.get());
-            if(customer.equals(customerRepository.findById(customer.getId()))){
-                return  ResponseEntity.ok(HttpStatus.OK);
-            }
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
+    public CustomerForm updateCustomer(@RequestBody CustomerForm customer) {
+       Customer tempCustomer = customerService.findByUsername(customer.getUsername());
+       if(tempCustomer == null) {
+           throw new CustomerNotFoundException("Customer with username " + customer.getUsername() + " doesn't exist.");
+       }
+       customerService.save(customer);
+       return customer;
     }
 }

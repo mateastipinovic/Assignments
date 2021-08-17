@@ -21,7 +21,7 @@ public class CustomerDetails {
     @OneToOne(mappedBy = "customerDetails")
     Customer customer;
 
-    private CustomerDetails(){
+    public CustomerDetails(){
 
     }
 

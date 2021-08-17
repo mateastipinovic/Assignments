@@ -1,8 +1,13 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.model.PizzaOrder;
+import com.agency04.sbss.pizza.model.Delivery;
+import com.agency04.sbss.pizza.model.DeliveryForm;
+import com.agency04.sbss.pizza.model.PizzaOrderForm;
 
 public interface PizzaDeliveryService {
-        public PizzeriaService getCurrentPizzeria();
-        public PizzaOrder orderPizza (PizzaOrder deliveryOrderForm);
+        PizzeriaService getCurrentPizzeria();
+        void saveOrder (PizzaOrderForm deliveryOrderForm);
+        void save(DeliveryForm delivery);
+        Delivery findById(int id);
+        void deleteById(int id);
 }

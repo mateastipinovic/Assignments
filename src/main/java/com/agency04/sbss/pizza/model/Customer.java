@@ -21,13 +21,14 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Delivery> deliveries;
 
-    public Customer(){
 
+    public Customer(int id, String username) {
+        this.id=id;
+        this.username=username;
     }
 
-    public Customer(int i, String username) {
-        this.id=i;
-        this.username=username;
+    public Customer() {
+
     }
 
     @Override

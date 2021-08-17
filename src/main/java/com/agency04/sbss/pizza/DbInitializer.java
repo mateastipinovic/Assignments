@@ -7,9 +7,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 @Component
 class DbInitializer implements ApplicationRunner {
@@ -31,14 +30,17 @@ class DbInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        theCustomerRepository.save(new Customer(1,"Ivan"));
-        theCustomerRepository.save(new Customer(2,"Marko"));
+        Customer customer1 = theCustomerRepository.save(new Customer(1,"Ivan"));
+        Customer customer2 = theCustomerRepository.save(new Customer(2,"Marko"));
 
-        theCustomerDetailsRepository.save(new CustomerDetails(1, "Ivan", "Ivić", "0914152145"));
-        theCustomerDetailsRepository.save(new CustomerDetails(2, "Marko", "Matić", "0914154455"));
+        CustomerDetails customerDetails1 =theCustomerDetailsRepository.save(new CustomerDetails(1, "Ivan", "Ivić", "0914152145"));
+        CustomerDetails customerDetails2 =theCustomerDetailsRepository.save(new CustomerDetails(2, "Marko", "Matić", "0914154455"));
 
-        theDeliveryRepository.save(new Delivery(1, new Date(2021,Calendar.DECEMBER, 10)));
-        theDeliveryRepository.save(new Delivery(2, new Date(2020, Calendar.JULY, 21)));
+        customer1.setCustomerDetails(customerDetails1);
+        customer2.setCustomerDetails(customerDetails2);
+
+        theDeliveryRepository.save(new Delivery(1, LocalDate.of(2021, 2,1)));
+        theDeliveryRepository.save(new Delivery(2, LocalDate.of(2019, 12,27)));
 
         thePizzaRepository.save(new Pizza(1, "Carbonara", Arrays.asList(Ingredient.MOZZARELLA, Ingredient.BACON)));
         thePizzaRepository.save(new Pizza(2, "Marinara", Arrays.asList(Ingredient.MOZZARELLA, Ingredient.OREGANO)));

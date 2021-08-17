@@ -1,7 +1,7 @@
 package com.agency04.sbss.pizza.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +12,7 @@ public class Delivery {
     private int id;
 
     @Column
-    private Date submissionDate;
+    private LocalDate submissionDate;
 
     @ManyToOne
     @JoinColumn(name="customer_id")
@@ -21,13 +21,14 @@ public class Delivery {
     @OneToMany(mappedBy = "delivery")
     private List<PizzaOrder> pizzaOrders;
 
-    public Delivery(){
 
-    };
-
-    public Delivery(int id, Date date) {
+    public Delivery(int id, LocalDate date) {
         this.id = id;
         this.submissionDate = date;
+    }
+
+    public Delivery() {
+
     }
 
     @Override
@@ -51,11 +52,11 @@ public class Delivery {
         this.id = id;
     }
 
-    public Date getSubmissionDate() {
+    public LocalDate getSubmissionDate() {
         return submissionDate;
     }
 
-    public void setSubmissionDate(Date submissionDate) {
+    public void setSubmissionDate(LocalDate submissionDate) {
         this.submissionDate = submissionDate;
     }
 

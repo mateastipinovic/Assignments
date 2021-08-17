@@ -1,82 +1,67 @@
 package com.agency04.sbss.pizza.rest;
 
 
-import com.agency04.sbss.pizza.DAO.DeliveryRepository;
-import com.agency04.sbss.pizza.DAO.PizzaOrderRepository;
-import com.agency04.sbss.pizza.model.Customer;
 import com.agency04.sbss.pizza.model.Delivery;
-import com.agency04.sbss.pizza.model.PizzaOrder;
+import com.agency04.sbss.pizza.model.DeliveryForm;
+import com.agency04.sbss.pizza.model.PizzaOrderForm;
+import com.agency04.sbss.pizza.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.Optional;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/delivery")
 public class DeliveryRestController {
 
-    @Autowired
-    private DeliveryRepository deliveryRepository;
-    @Autowired
-    private PizzaOrderRepository pizzaOrderRepository;
+    private DeliveryService deliveryService;
 
     @Autowired
-    public DeliveryRestController(DeliveryRepository theDeliveryRepository, PizzaOrderRepository pizzaOrderRepository){
-        deliveryRepository = theDeliveryRepository;
-        this.pizzaOrderRepository = pizzaOrderRepository;
+    public DeliveryRestController(DeliveryService theDeliveryService){
+        deliveryService = theDeliveryService;
     }
 
     @PostMapping("/order")
-    public PizzaOrder orderDetails (@RequestBody PizzaOrder pizzaOrder){
-        pizzaOrderRepository.save(pizzaOrder);
-        deliveryRepository.save(new Delivery(0, new Date()));
-
+    public PizzaOrderForm orderDetails (@RequestBody PizzaOrderForm pizzaOrder){
+        deliveryService.saveOrder(pizzaOrder);
+        deliveryService.save(new DeliveryForm(LocalDate.now()));
         return pizzaOrder;
 
     }
 
     @GetMapping("/{id}")
     public Delivery getDelivery(@PathVariable int id) {
-        Optional<Delivery> delivery = deliveryRepository.findById(id);
-        if(delivery.isPresent()){
-            return delivery.get();
+        Delivery delivery = deliveryService.findById(id);
+        if(delivery == null ){
+            throw new CustomerNotFoundException("Delivery with id " + id + " doesn't exist.");
         }
-        throw new CustomerNotFoundException("Delivery with id " + id + " doesn't exist.");
-
+        return delivery;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteDelivery(@PathVariable int id) {
-        Optional<Delivery> tempDelivery = deliveryRepository.findById(id);
+        Delivery tempDelivery = deliveryService.findById(id);
 
-        if (!tempDelivery.isPresent()) {
+        if (tempDelivery == null) {
             throw new CustomerNotFoundException("Delivery with id " + id + " doesn't exist.");
         }
 
-        deliveryRepository.deleteById(id);
+        deliveryService.deleteById(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public Delivery createDelivery(@RequestBody Delivery delivery) {
-        delivery.setId(0);
-        deliveryRepository.save(delivery);
+    public DeliveryForm createDelivery(@RequestBody DeliveryForm delivery) {
+        deliveryService.save(delivery);
         return  delivery;
     }
 
     @PutMapping("/")
-    public ResponseEntity updateDelivery (@RequestBody Delivery delivery) {
-        Optional<Delivery> tempDelivery = deliveryRepository.findById(delivery.getId());
-        if (tempDelivery.isPresent()) {
-            deliveryRepository.save(tempDelivery.get());
-            if(delivery.equals(deliveryRepository.findById(delivery.getId()))){
-                return  ResponseEntity.ok(HttpStatus.OK);
-            }
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
+    public DeliveryForm updateDelivery (@RequestBody DeliveryForm delivery) {
+        deliveryService.save(delivery);
+        return delivery;
     }
 
 }

@@ -25,7 +25,6 @@ public class PizzaOrder {
     private Delivery delivery;
 
     public PizzaOrder(){
-
     };
 
     public PizzaOrder(int id, String quantity, Size size) {

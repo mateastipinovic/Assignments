@@ -1,6 +1,5 @@
 package com.agency04.sbss.pizza.rest;
 
-import com.agency04.sbss.pizza.DAO.PizzaRepository;
 import com.agency04.sbss.pizza.model.PizzaMenuItem;
 import com.agency04.sbss.pizza.service.PizzaDeliveryService;
 import com.agency04.sbss.pizza.service.PizzeriaService;
