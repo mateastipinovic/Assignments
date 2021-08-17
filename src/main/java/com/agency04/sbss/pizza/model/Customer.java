@@ -21,6 +21,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Delivery> deliveries;
 
+    public Customer(){
+
+    }
+
     public Customer(int i, String username) {
         this.id=i;
         this.username=username;

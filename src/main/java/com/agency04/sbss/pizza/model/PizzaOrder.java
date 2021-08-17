@@ -24,6 +24,10 @@ public class PizzaOrder {
     @JoinColumn(name="delivery_id")
     private Delivery delivery;
 
+    public PizzaOrder(){
+
+    };
+
     public PizzaOrder(int id, String quantity, Size size) {
         this.id = id;
         this.quantity = quantity;

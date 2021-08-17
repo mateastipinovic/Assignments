@@ -13,12 +13,17 @@ public class Pizza {
     @Column
     String name;
 
+    @ElementCollection
     List<Ingredient> ingredients;
 
-    @OneToMany(mappedBy = "pizzaOrder")
-    PizzaOrder pizzaOrder;
+    @OneToMany(mappedBy = "pizza")
+    List<PizzaOrder> pizzaOrders;
 
-    public <T> Pizza(int id, String name, List<Ingredient> ingredients) {
+    public Pizza(){
+
+    };
+
+    public Pizza(int id, String name, List<Ingredient> ingredients) {
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
@@ -29,7 +34,7 @@ public class Pizza {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pizza pizza = (Pizza) o;
-        return id == pizza.id && Objects.equals(name, pizza.name) && Objects.equals(ingredients, pizza.ingredients) && Objects.equals(pizzaOrder, pizza.pizzaOrder);
+        return id == pizza.id && Objects.equals(name, pizza.name) && Objects.equals(ingredients, pizza.ingredients) && Objects.equals(pizzaOrders, pizza.pizzaOrders);
     }
 
     @Override
@@ -62,12 +67,12 @@ public class Pizza {
     }
 
 
-    public PizzaOrder getPizzaOrder() {
-        return pizzaOrder;
+    public List<PizzaOrder> getPizzaOrder() {
+        return pizzaOrders;
     }
 
-    public void setPizzaOrder(PizzaOrder pizzaOrder) {
-        this.pizzaOrder = pizzaOrder;
+    public void setPizzaOrders(List<PizzaOrder> pizzaOrders) {
+        this.pizzaOrders = pizzaOrders;
     }
 
 }

@@ -21,6 +21,10 @@ public class Delivery {
     @OneToMany(mappedBy = "delivery")
     private List<PizzaOrder> pizzaOrders;
 
+    public Delivery(){
+
+    };
+
     public Delivery(int id, Date date) {
         this.id = id;
         this.submissionDate = date;

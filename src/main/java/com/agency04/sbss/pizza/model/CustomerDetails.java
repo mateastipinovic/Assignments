@@ -21,6 +21,10 @@ public class CustomerDetails {
     @OneToOne(mappedBy = "customerDetails")
     Customer customer;
 
+    private CustomerDetails(){
+
+    }
+
     public CustomerDetails(int id, String firstName, String lastName, String phone) {
         this.id = id;
         this.firstName = firstName;
