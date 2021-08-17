@@ -4,9 +4,9 @@ import java.util.List;
 
 public class PizzaMenuItem {
     private String pizza;
-    private List<PizzaSize> size;
+    private List<Size> size;
 
-    public PizzaMenuItem(String pizza, List<PizzaSize> size){
+    public PizzaMenuItem(String pizza, List<Size> size){
         this.pizza = pizza;
         this.size = size;
     }
@@ -19,11 +19,11 @@ public class PizzaMenuItem {
         this.pizza = pizza;
     }
 
-    public List<PizzaSize> getSize() {
+    public List<Size> getSize() {
         return size;
     }
 
-    public void setSize(List<PizzaSize> size) {
+    public void setSize(List<Size> size) {
         this.size = size;
     }
 }

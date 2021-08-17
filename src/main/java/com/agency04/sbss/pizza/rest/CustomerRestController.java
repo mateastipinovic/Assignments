@@ -1,32 +1,29 @@
 package com.agency04.sbss.pizza.rest;
 
+import com.agency04.sbss.pizza.DAO.CustomerRepository;
 import com.agency04.sbss.pizza.model.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerRestController {
 
-    private List<Customer> customers;
+    private CustomerRepository customerRepository;
 
-    @PostConstruct
-    public void loadData() {
-        customers = new ArrayList<>();
-        customers.add(new Customer(0, "Ivan Ivić", "Ivićeva 32"));
-        customers.add(new Customer(1, "Matko Matić", "Matićeva 55"));
-        customers.add(new Customer(2, "Stipe Stipić", "Stipićeva 1"));
+    @Autowired
+    public CustomerRestController(CustomerRepository theCustomerService){
+        customerRepository= theCustomerService;
     }
 
     @GetMapping("/{username}")
     public Customer getCustomer(@PathVariable String username) {
-        Customer customer = customers.stream().filter(x -> x.getUserName().equals(username)).findFirst().orElse(null);
+        Customer customer = customerRepository.findByUsername(username);
         if(customer == null){
             throw new CustomerNotFoundException("Customer with username " + username + " doesn't exist.");
         }
@@ -35,18 +32,21 @@ public class CustomerRestController {
 
     @DeleteMapping("/{username}")
     public ResponseEntity deleteCustomer(@PathVariable String username) {
-        Customer customer = customers.stream().filter(x -> x.getUserName().equals(username)).findFirst().orElse(null);
-        if(customer == null){
+        Customer tempCustomer = customerRepository.findByUsername(username);
+
+        if (tempCustomer == null) {
             throw new CustomerNotFoundException("Customer with username " + username + " doesn't exist.");
         }
-        customers.remove(customer);
+
+        customerRepository.deleteByUsername(username);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/")
     public ResponseEntity registerCustomer(@RequestBody Customer customer) {
-        customers.add(new Customer(customer));
-        if(customers.stream().filter(x -> x.getCustomerId() == customer.getCustomerId()).findFirst().orElse(null) == null ){
+        customer.setId(0);
+        customerRepository.save(customer);
+        if(customerRepository.findByUsername(customer.getUsername()) == null ){
             throw new CustomerNotFoundException("Customer is not registered.");
         }
         return  ResponseEntity.ok(HttpStatus.CREATED).status(201).build();
@@ -54,11 +54,10 @@ public class CustomerRestController {
 
     @PutMapping("/")
     public ResponseEntity updateCustomer(@RequestBody Customer customer) {
-        Customer temp = customers.stream().filter(x -> x.getCustomerId() == customer.getCustomerId()).findFirst().orElse(null);
-        if (temp != null) {
-            int index = customers.indexOf(temp);
-            customers.set(index, customer);
-            if(Objects.equals(customers.get(index), customer)){
+        Optional<Customer> tempCustomer = customerRepository.findById(customer.getId());;
+        if (tempCustomer.isPresent()) {
+            customerRepository.save(tempCustomer.get());
+            if(customer.equals(customerRepository.findById(customer.getId()))){
                 return  ResponseEntity.ok(HttpStatus.OK);
             }
         }

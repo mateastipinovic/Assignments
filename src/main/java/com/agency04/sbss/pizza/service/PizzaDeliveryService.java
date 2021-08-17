@@ -1,8 +1,8 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.model.DeliveryOrderForm;
+import com.agency04.sbss.pizza.model.PizzaOrder;
 
 public interface PizzaDeliveryService {
         public PizzeriaService getCurrentPizzeria();
-        public DeliveryOrderForm orderPizza (DeliveryOrderForm deliveryOrderForm);
+        public PizzaOrder orderPizza (PizzaOrder deliveryOrderForm);
 }
