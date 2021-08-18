@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
     @RestController
     @RequestMapping("/api/pizzeria")
     public class PizzaRestController {
@@ -20,13 +19,14 @@ import java.util.List;
         @Autowired
         private PizzaDeliveryService deliveryService;
 
+
         @GetMapping("/menu")
         public List<PizzaMenuItem> getPizzeriaMenu() {
             return pizzeriaSplitService.getMenu();
         }
 
         @GetMapping("/")
-        public PizzeriaService getPizzeriaDetails() {
+        public PizzeriaService getPizzeriaDetails(){
             return deliveryService.getCurrentPizzeria();
         }
     }

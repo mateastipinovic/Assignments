@@ -1,44 +1,59 @@
 package com.agency04.sbss.pizza.rest;
 
-import com.agency04.sbss.pizza.model.DeliveryOrderForm;
-import com.agency04.sbss.pizza.service.PizzaDeliveryService;
+
+import com.agency04.sbss.pizza.model.Delivery;
+import com.agency04.sbss.pizza.model.DeliveryForm;
+import com.agency04.sbss.pizza.model.PizzaOrderForm;
+import com.agency04.sbss.pizza.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/delivery")
 public class DeliveryRestController {
 
+    private DeliveryService deliveryService;
+
     @Autowired
-    private PizzaDeliveryService deliveryService;
-    private List<DeliveryOrderForm> currentOrders;
-
-
-    @PostConstruct
-    public void loadData() {
-        currentOrders = new ArrayList<>();
+    public DeliveryRestController(DeliveryService theDeliveryService){
+        deliveryService = theDeliveryService;
     }
 
     @PostMapping("/order")
-    public ResponseEntity orderDetails (@RequestBody DeliveryOrderForm deliveryOrderForm){
-        currentOrders.add(new DeliveryOrderForm(deliveryOrderForm));
-        DeliveryOrderForm check = deliveryService.orderPizza(deliveryOrderForm);
-        if(check == deliveryOrderForm){
-            return ResponseEntity.ok(HttpStatus.CREATED).status(201).build();
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
+    public PizzaOrderForm orderDetails (@RequestBody PizzaOrderForm pizzaOrder){
+        deliveryService.saveOrder(pizzaOrder);
+        deliveryService.save(new DeliveryForm(LocalDate.now()));
+        return pizzaOrder;
 
     }
 
-    @GetMapping("/list")
-    public List<DeliveryOrderForm> currentOrders(){
-        return currentOrders;
+    @GetMapping("/{id}")
+    public Delivery getDelivery(@PathVariable int id) {
+        Delivery delivery = deliveryService.findById(id);
+        return delivery;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteDelivery(@PathVariable int id) {
+        Delivery tempDelivery = deliveryService.findById(id);
+        deliveryService.deleteById(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/")
+    public DeliveryForm createDelivery(@RequestBody DeliveryForm delivery) {
+        deliveryService.save(delivery);
+        return  delivery;
+    }
+
+    @PutMapping("/")
+    public DeliveryForm updateDelivery (@RequestBody DeliveryForm delivery) {
+        deliveryService.save(delivery);
+        return delivery;
     }
 
 }

@@ -1,31 +1,86 @@
 package com.agency04.sbss.pizza.model;
 
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
+
+@Entity
 public class Customer {
-    private int customerId;
-    private String userName;
-    private String address;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column
+    private String username;
+
+    @OneToOne
+    @JoinColumn(name = "customerDetails_id")
+    private CustomerDetails customerDetails;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Delivery> deliveries;
+
+
+    public Customer(int id, String username, CustomerDetails customerDetails) {
+        this.id=id;
+        this.username=username;
+        this.customerDetails = customerDetails;
+    }
+
+    public Customer() {
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id && Objects.equals(username, customer.username) && Objects.equals(customerDetails, customer.customerDetails) && Objects.equals(deliveries, customer.deliveries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     public Customer(Customer customer){
-        this.customerId = customer.customerId;
-        this.userName=customer.userName;
-        this.address= customer.address;
-    }
-    public Customer(int customerId, String username, String address){
-        this.customerId = customerId;
-        this.userName=username;
-        this.address= address;
+        this.id = customer.id;
+        this.username=customer.username;
+        this.customerDetails = customer.customerDetails;
+        this.deliveries = customer.deliveries;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getId() {
+        return id;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUsername() {
+        return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
+    }
+
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
+    }
+
+    public List<Delivery> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(List<Delivery> deliveries) {
+        this.deliveries = deliveries;
+    }
 }

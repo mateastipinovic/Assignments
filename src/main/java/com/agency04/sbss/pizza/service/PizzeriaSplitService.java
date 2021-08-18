@@ -1,7 +1,8 @@
 package com.agency04.sbss.pizza.service;
 
+import com.agency04.sbss.pizza.model.Pizza;
 import com.agency04.sbss.pizza.model.PizzaMenuItem;
-import com.agency04.sbss.pizza.model.PizzaSize;
+import com.agency04.sbss.pizza.model.Size;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -21,8 +22,8 @@ public class PizzeriaSplitService implements PizzeriaService {
     public void dataInitialization(){
         this.name="Pizzeria Split";
         this.address="Vukovarska ulica 15";
-        this.menu = Arrays.asList(new PizzaMenuItem("Carbonara", Arrays.asList(PizzaSize.SMALL, PizzaSize.MEDIUM, PizzaSize.BIG)),
-                                  new PizzaMenuItem("FruttiDiMare", Arrays.asList(PizzaSize.SMALL, PizzaSize.MEDIUM, PizzaSize.BIG)));
+        this.menu = Arrays.asList(new PizzaMenuItem("Carbonara", Arrays.asList(Size.SMALL, Size.MEDIUM, Size.LARGE)),
+                                  new PizzaMenuItem("FruttiDiMare", Arrays.asList(Size.SMALL, Size.MEDIUM, Size.LARGE)));
     }
     @PreDestroy
     public void preDestroyMessage(){
@@ -52,7 +53,7 @@ public class PizzeriaSplitService implements PizzeriaService {
     }
 
     @Override
-    public void makePizza(String pizza, PizzaSize size, int quantity) {
+    public void makePizza(Pizza pizza, Size size, String quantity) {
         System.out.println("Make "+ quantity + " " + size.toString().toLowerCase(Locale.ROOT) + " " + pizza +  "pizza.");
     }
 }

@@ -1,7 +1,8 @@
 package com.agency04.sbss.pizza.service;
 
+import com.agency04.sbss.pizza.model.Pizza;
 import com.agency04.sbss.pizza.model.PizzaMenuItem;
-import com.agency04.sbss.pizza.model.PizzaSize;
+import com.agency04.sbss.pizza.model.Size;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class PizzeriaZagrebService implements PizzeriaService {
     public void dataInitialization(){
         this.name="Pizzeria Zagreb";
         this.address="Splitska ulica 12";
-        this.menu = Arrays.asList(new PizzaMenuItem("Margherita", Arrays.asList(PizzaSize.MEDIUM, PizzaSize.BIG)),
-                                               new PizzaMenuItem("Marinara", Arrays.asList(PizzaSize.MEDIUM, PizzaSize.BIG)));
+        this.menu = Arrays.asList(new PizzaMenuItem("Margherita", Arrays.asList(Size.MEDIUM, Size.LARGE)),
+                                               new PizzaMenuItem("Marinara", Arrays.asList(Size.MEDIUM, Size.LARGE)));
     }
 
     @PreDestroy
@@ -58,7 +59,7 @@ public class PizzeriaZagrebService implements PizzeriaService {
 
 
     @Override
-    public void makePizza(String pizza, PizzaSize size, int quantity) {
+    public void makePizza(Pizza pizza, Size size, String quantity) {
         System.out.println("Make "+ quantity + " " + size.toString().toLowerCase(Locale.ROOT) + " " + pizza +  "pizza.");
     }
 }
