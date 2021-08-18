@@ -22,9 +22,10 @@ public class Customer {
     private List<Delivery> deliveries;
 
 
-    public Customer(int id, String username) {
+    public Customer(int id, String username, CustomerDetails customerDetails) {
         this.id=id;
         this.username=username;
+        this.customerDetails = customerDetails;
     }
 
     public Customer() {

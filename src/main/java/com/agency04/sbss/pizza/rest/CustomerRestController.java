@@ -23,20 +23,12 @@ public class CustomerRestController {
     @GetMapping("/{username}")
     public Customer getCustomer(@PathVariable String username) {
         Customer customer = customerService.findByUsername(username);
-        if(customer == null){
-            throw new CustomerNotFoundException("Customer with username " + username + " doesn't exist.");
-        }
         return customer;
     }
 
     @DeleteMapping("/{username}")
     public ResponseEntity deleteCustomer(@PathVariable String username) {
         Customer tempCustomer = customerService.findByUsername(username);
-
-        if (tempCustomer == null) {
-            throw new CustomerNotFoundException("Customer with username " + username + " doesn't exist.");
-        }
-
         customerService.deleteByUsername(username);
         return ResponseEntity.ok(HttpStatus.OK);
     }

@@ -34,20 +34,12 @@ public class DeliveryRestController {
     @GetMapping("/{id}")
     public Delivery getDelivery(@PathVariable int id) {
         Delivery delivery = deliveryService.findById(id);
-        if(delivery == null ){
-            throw new CustomerNotFoundException("Delivery with id " + id + " doesn't exist.");
-        }
         return delivery;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteDelivery(@PathVariable int id) {
         Delivery tempDelivery = deliveryService.findById(id);
-
-        if (tempDelivery == null) {
-            throw new CustomerNotFoundException("Delivery with id " + id + " doesn't exist.");
-        }
-
         deliveryService.deleteById(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
